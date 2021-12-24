@@ -3,20 +3,30 @@ import React, { useState } from "react";
 import Card from "../UI/Card";
 import Button from "../UI/Button";
 import classes from "./AddUser.module.css";
+import ErrorModal from "../UI/ErrorModal";
 
 const AddUser = (props) => {
   // Managing State for Username and Age inputs;
   //Both states initialized with an empty string.
   const [enteredUsername, setEnteredUsername] = useState("");
   const [enteredAge, setEnteredAge] = useState("");
+  const [error, setError] = useState();
 
   //Function to submit form, passed as an attribute to html form tag
   const submitFormHandler = (event) => {
     event.preventDefault();
     if (enteredUsername.trim().length === 0 || enteredAge.trim().length === 0) {
+      setError({
+        title: "Invalid Input",
+        message: "Please enter name and age! No empty values",
+      });
       return;
     }
     if (+enteredAge < 1) {
+      setError({
+        title: "Invalid Age",
+        message: "Please enter valid age!",
+      });
       return;
     }
     props.onAddUser(enteredUsername, enteredAge);
@@ -36,8 +46,19 @@ const AddUser = (props) => {
   const ageChangeHandler = (event) => {
     setEnteredAge(event.target.value);
   };
+
+  const errorHandler = () => {
+    setError(null);
+  };
   return (
     <div>
+      {error && (
+        <ErrorModal
+          title={error.title}
+          message={error.message}
+          onConfirmError={errorHandler}
+        />
+      )}
       <Card className={classes.input}>
         <form onSubmit={submitFormHandler}>
           <label htmlFor="username">Username</label>
