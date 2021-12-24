@@ -46,7 +46,7 @@ const AddUser = (props) => {
   const ageChangeHandler = (event) => {
     setEnteredAge(event.target.value);
   };
-
+  //Function makes error modal disappear at the click of the button or backdrop
   const errorHandler = () => {
     setError(null);
   };
