@@ -4,6 +4,7 @@ import Card from "./Card";
 import Button from "./Button";
 import classes from "./ErrorModal.module.css";
 
+//Modal function to display Error message with overlay
 const ErrorModal = (props) => {
   return (
     <div>
